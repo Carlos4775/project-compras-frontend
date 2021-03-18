@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Home from "./Pages/Home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Departamentos from "./Pages/Departamentos";
+import Articulos from "./Pages/Articulos";
+import UnidadesMedida from "./Pages/UnidadesMedida";
+import Proveedores from "./Pages/Proveedores";
+import OrdenCompra from "./Pages/OrdenCompra";
+import About from "./Pages/About";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/departamentos">
+          <Departamentos />
+        </Route>
+        <Route path="/articulos">
+          <Articulos />
+        </Route>
+        <Route path="/unidadesmedida">
+          <UnidadesMedida />
+        </Route>
+        <Route path="/proveedores">
+          <Proveedores />
+        </Route>
+        <Route path="/ordencompra">
+          <OrdenCompra />
+        </Route>
+        <Route path="/sobrenosotros">
+          <About />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
-
-export default App;
