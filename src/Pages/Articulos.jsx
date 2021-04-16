@@ -3,8 +3,9 @@ import MainLayout from "../Layout/MainLayout";
 import axios from "axios";
 
 const Articulos = () => {
-  const baseUrl = "https://localhost:44348/api/articulos";
-  const unidadMedidaUrl = "https://localhost:44348/api/unidadesmedidas";
+  const baseUrl = "https://api-compras.projects.helx.dev/api/articulos";
+  const unidadMedidaUrl =
+    "https://api-compras.projects.helx.dev/api/unidadesmedidas";
   const [articulo, setArticulo] = useState([]);
   const [unidadMedida, setUnidadMedida] = useState([]);
   const [isOpen, setIsOpen] = useState(true);

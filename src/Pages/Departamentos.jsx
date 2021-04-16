@@ -8,7 +8,7 @@ import "../../public/wysiwyg-24px.svg";
 import "../../public/add_circle_outline-24px.svg";
 
 const Departamentos = () => {
-  const baseUrl = "https://localhost:44348/api/departamentos";
+  const baseUrl = "https://api-compras.projects.helx.dev/api/departamentos";
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);

@@ -3,9 +3,11 @@ import MainLayout from "../Layout/MainLayout";
 import axios from "axios";
 
 const OrdenCompra = () => {
-  const baseUrl = "https://localhost:44348/api/ordenescompras";
-  const departamentosUrl = "https://localhost:44348/api/departamentos";
-  const proveedoresUrl = "https://localhost:44348/api/proveedores";
+  const baseUrl = "https://api-compras.projects.helx.dev/api/ordenescompras";
+  const departamentosUrl =
+    "https://api-compras.projects.helx.dev/api/departamentos";
+  const proveedoresUrl =
+    "https://api-compras.projects.helx.dev/api/proveedores";
   const [ordenCompra, setOrdenCompra] = useState([]);
   const [proveedor, setProveedor] = useState([]);
   const [departamento, setDepartamento] = useState([]);

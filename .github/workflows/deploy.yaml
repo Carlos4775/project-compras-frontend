@@ -1,0 +1,21 @@
+name: Deploy to Helx Server
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: s1.srvrs.msanchez.dev
+          username: root
+          key: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+            QyNTUxOQAAACCvdZwSQj9UrDSo+TuoX7i9M5U9cbhNPHF/prYFOK6e5QAAAJC1IE+gtSBP
+            oAAAAAtzc2gtZWQyNTUxOQAAACCvdZwSQj9UrDSo+TuoX7i9M5U9cbhNPHF/prYFOK6e5Q
+            AAAEAfks8wTEZs27k8pnKY62reKehkj505OAL/8wuIhllfy691nBJCP1SsNKj5O6hfuL0z
+            lT1xuE08cX+mtgU4rp7lAAAAB2dpdC1zc2gBAgMEBQY=
+            -----END OPENSSH PRIVATE KEY-----
+          port: 22

@@ -3,7 +3,7 @@ import MainLayout from "../Layout/MainLayout";
 import axios from "axios";
 
 const Proveedores = () => {
-  const baseUrl = "https://localhost:44348/api/proveedores";
+  const baseUrl = "https://api-compras.projects.helx.dev/api/proveedores";
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);

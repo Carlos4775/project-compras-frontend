@@ -4,7 +4,8 @@ import axios from "axios";
 import accounting from "../img/Wavy_Bus-14_Single-10.jpg";
 const Asientos = () => {
   const baseUrl = "https://eb6ec1171113.ngrok.io/api/accountingEntry";
-  const asientosURL = "https://localhost:44348/api/ordenescompras";
+  const asientosURL =
+    "https://api-compras.projects.helx.dev/api/ordenescompras";
   const [ordenesCompras, setOrdenesCompras] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [refreshCount, setRefreshCount] = useState(0);

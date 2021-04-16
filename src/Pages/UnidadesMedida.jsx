@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../Layout/MainLayout";
 
 const UnidadesMedida = () => {
-  const baseUrl = "https://localhost:44348/api/unidadesmedidas";
+  const baseUrl = "https://api-compras.projects.helx.dev/api/unidadesmedidas";
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
