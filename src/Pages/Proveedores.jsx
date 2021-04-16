@@ -9,7 +9,7 @@ const Proveedores = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
   const [gestorSeleccionado, setGestorSeleccionado] = useState({
-    id_Proveedores: 0,
+    id_Proveedor: 0,
     cedula_RNC: "",
     nombre_Comercial: "",
     estado: true,
@@ -54,13 +54,13 @@ const Proveedores = () => {
   const peticionPut = async () => {
     try {
       const response = await axios.put(
-        baseUrl + "/" + gestorSeleccionado.id_Proveedores,
+        baseUrl + "/" + gestorSeleccionado.id_Proveedor,
         gestorSeleccionado
       );
       var respuesta = response.data;
       var dataAuxiliar = data;
       dataAuxiliar.map((gestor) => {
-        if (gestor.id_Proveedores === gestorSeleccionado.id_Proveedores) {
+        if (gestor.id_Proveedor === gestorSeleccionado.id_Proveedor) {
           gestor.cedula_RNC = respuesta.cedula_RNC;
           gestor.nombre_Comercial = respuesta.nombre_Comercial;
           gestor.estado = respuesta.estado;
@@ -73,11 +73,9 @@ const Proveedores = () => {
 
   const peticionDelete = (x) =>
     axios
-      .delete(baseUrl + "/" + x.id_Proveedores)
+      .delete(baseUrl + "/" + x.id_Proveedor)
       .then((response) => {
-        setData(
-          data.filter((gestor) => gestor.id_Proveedores !== response.data)
-        );
+        setData(data.filter((gestor) => gestor.id_Proveedor !== response.data));
       })
       .catch((error) => {
         console.log(error);
@@ -91,10 +89,10 @@ const Proveedores = () => {
   return (
     <MainLayout>
       <div className="container mx-auto">
-        <div class="flex flex-col">
-          <div class="-my-2 overflow-x-auto">
-            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div class="absolute flex items-center justify-center rounded-md text-white">
+        <div className="flex flex-col">
+          <div className="-my-2 overflow-x-auto">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="absolute flex items-center justify-center rounded-md text-white">
                 <img
                   src="add_circle_outline-24px.svg"
                   alt=""
@@ -104,74 +102,74 @@ const Proveedores = () => {
                   className="cursor-pointer"
                 />
               </div>
-              <p class="ml-12 text-lg leading-6 font-medium text-gray-900">
+              <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
                 Agregar proveedor
               </p>
               <br />
-              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                  <thead class="bg-gray-50">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
                     <tr>
                       <th
                         scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Id Proveedor
                       </th>
                       <th
                         scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Cedula / RNC
                       </th>
                       <th
                         scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Nombre comercial
                       </th>
                       <th
                         scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Estado
                       </th>
                       <th
                         scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Operaciones
                       </th>
                     </tr>
                   </thead>
-                  <tbody class="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white divide-y divide-gray-200">
                     {data.map((gestor) => (
-                      <tr key={gestor.id_Proveedores}>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="ml-4">
-                              <div class="text-sm font-medium text-gray-900">
-                                {gestor.id_Proveedores}
+                      <tr key={gestor.id_Proveedor}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {gestor.id_Proveedor}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
                             {gestor.cedula_RNC}
                           </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
                             {gestor.nombre_Comercial}
                           </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                             {gestor.estado ? "Activo" : "Inactivo"}
                           </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <tr>
                             <td>
                               <img
@@ -211,23 +209,12 @@ const Proveedores = () => {
             (isOpen ? "hidden" : "")
           }
         >
-          <div class="bg-white rounded shadow-lg w-10/12 md:w-1/3">
-            <div class="border-b px-4 py-2 flex justify-between items-center">
-              <h3 class="font-semibold text-lg">Insertar proveedor</h3>
+          <div className="bg-white rounded shadow-lg w-10/12 md:w-1/3">
+            <div className="border-b px-4 py-2 flex justify-between items-center">
+              <h3 className="font-semibold text-lg">Insertar proveedor</h3>
             </div>
-            <div class="m-7 p-3">
-              <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400">
-                Id Proveedor
-              </label>
-              <input
-                type="number"
-                name="id_Proveedores"
-                onChange={handleChange}
-                value={gestorSeleccionado.id_Proveedores}
-                class="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-              ></input>
-              <br />
-              <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400">
+            <div className="m-7 p-3">
+              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Cedula / RNC
               </label>
               <input
@@ -235,10 +222,10 @@ const Proveedores = () => {
                 name="cedula_RNC"
                 onChange={handleChange}
                 value={gestorSeleccionado.cedula_RNC}
-                class="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
               ></input>
               <br />
-              <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400">
+              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Nombre comercial{" "}
               </label>
               <input
@@ -246,10 +233,10 @@ const Proveedores = () => {
                 name="nombre_Comercial"
                 onChange={handleChange}
                 value={gestorSeleccionado.nombre_Comercial}
-                class="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
               ></input>
               <br />
-              <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400">
+              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Estado
               </label>
               <input
@@ -259,9 +246,9 @@ const Proveedores = () => {
                 checked={gestorSeleccionado.estado}
               ></input>
             </div>
-            <div class="flex justify-end items-center w-100 border-t p-3">
+            <div className="flex justify-end items-center w-100 border-t p-3">
               <button
-                class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mr-1 close-modal"
+                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mr-1 close-modal"
                 onClick={() => {
                   setIsOpen(!isOpen);
                 }}
@@ -269,7 +256,7 @@ const Proveedores = () => {
                 Cancel
               </button>
               <button
-                class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white"
+                className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white"
                 onClick={async () => {
                   isEdit ? await peticionPut() : await peticionPost();
                   setGestorSeleccionado({

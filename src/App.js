@@ -7,11 +7,15 @@ import UnidadesMedida from "./Pages/UnidadesMedida";
 import Proveedores from "./Pages/Proveedores";
 import OrdenCompra from "./Pages/OrdenCompra";
 import About from "./Pages/About";
+import Asientos from "./Pages/Asientos";
 
 export default function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/asientos">
+          <Asientos />
+        </Route>
         <Route path="/departamentos">
           <Departamentos />
         </Route>
