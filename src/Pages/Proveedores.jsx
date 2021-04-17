@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../Layout/MainLayout";
 import axios from "axios";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const Proveedores = () => {
-  const baseUrl = "https://api-compras.projects.helx.dev/api/proveedores";
+  const baseUrl = "https://compras-apec.herokuapp.com/proveedores";
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
@@ -82,15 +84,14 @@ const Proveedores = () => {
       });
 
   useEffect(() => {
-    console.log("Getting data");
     peticionGet();
   }, [refreshCount]);
 
   return (
     <MainLayout>
-      <div className="container mx-auto">
+      <div className="px-10">
         <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto">
+          <div className="overflow-x-auto">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="absolute flex items-center justify-center rounded-md text-white">
                 <img
@@ -101,51 +102,51 @@ const Proveedores = () => {
                   }}
                   className="cursor-pointer"
                 />
+                <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
+                  Agregar proveedor
+                </p>
               </div>
-              <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
-                Agregar proveedor
-              </p>
-              <br />
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
+
+              <div className="shadow mt-12 overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <Table className="w-full divide-y divide-gray-200">
+                  <Thead className="bg-gray-50">
+                    <Tr>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Id Proveedor
-                      </th>
-                      <th
+                        ID
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Cedula / RNC
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Nombre comercial
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Estado
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Operaciones
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
                     {data.map((gestor) => (
-                      <tr key={gestor.id_Proveedor}>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                      <Tr key={gestor.id_Proveedor} className="mt-10">
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">
@@ -153,52 +154,53 @@ const Proveedores = () => {
                               </div>
                             </div>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.cedula_RNC}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.nombre_Comercial}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={
+                              gestor.estado
+                                ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                            }
+                          >
                             {gestor.estado ? "Activo" : "Inactivo"}
                           </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <tr>
-                            <td>
-                              <img
-                                src="mode_edit-24px.svg"
-                                alt=""
-                                onClick={() => {
-                                  setIsOpen(!isOpen);
-                                  setGestorSeleccionado(gestor);
-                                  setIsEdit(true);
-                                }}
-                                className="cursor-pointer"
-                              />
-                            </td>
-                            <td>
-                              <img
-                                src="delete_outline-24px.svg"
-                                alt=""
-                                onClick={() => {
-                                  peticionDelete(gestor);
-                                }}
-                                className="cursor-pointer"
-                              />
-                            </td>
-                          </tr>
-                        </td>
-                      </tr>
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                          <img
+                            src="mode_edit-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              setIsOpen(!isOpen);
+                              setGestorSeleccionado(gestor);
+                              setIsEdit(true);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+
+                          <img
+                            src="delete_outline-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              peticionDelete(gestor);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+                        </Td>
+                      </Tr>
                     ))}
-                  </tbody>
-                </table>
+                  </Tbody>
+                </Table>
               </div>
             </div>
           </div>
@@ -222,9 +224,8 @@ const Proveedores = () => {
                 name="cedula_RNC"
                 onChange={handleChange}
                 value={gestorSeleccionado.cedula_RNC}
-                className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-              ></input>
-              <br />
+                className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+              />
               <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Nombre comercial{" "}
               </label>
@@ -233,9 +234,8 @@ const Proveedores = () => {
                 name="nombre_Comercial"
                 onChange={handleChange}
                 value={gestorSeleccionado.nombre_Comercial}
-                className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-              ></input>
-              <br />
+                className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+              />
               <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Estado
               </label>
@@ -244,7 +244,7 @@ const Proveedores = () => {
                 name="estado"
                 onChange={handleChange}
                 checked={gestorSeleccionado.estado}
-              ></input>
+              />
             </div>
             <div className="flex justify-end items-center w-100 border-t p-3">
               <button

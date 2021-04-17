@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.1.1",
+    "@craco/craco": "^6.2.0",
     "@headlessui/react": "^0.3.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -16,6 +16,7 @@
     "react-router-hash-link": "^2.4.0",
     "react-scripts": "4.0.3",
     "react-simple-hook-modal": "^1.1.0",
+    "react-super-responsive-table": "^5.2.0",
     "react-virtualized": "^9.22.3",
     "web-vitals": "^1.1.1"
   },

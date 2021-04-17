@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 export default class Dropdown extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     document.addEventListener("click", this.handleClick, false);
   }
@@ -49,15 +45,15 @@ export default class Dropdown extends Component {
               aria-hidden="true"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </summary>
-          {options.map((option) => {
+          {options.map((option, idx) => {
             return (
-              <div onClick={(e) => this.handleSelect(e)}>
+              <div onClick={(e) => this.handleSelect(e)} key={idx}>
                 {this.props.children}
               </div>
             );

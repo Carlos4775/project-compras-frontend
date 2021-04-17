@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: ghcr.io/helxdev/api-compras:frontend
+          image: ghcr.io/helxdev/web-compras:$GITHUB_SHA
           imagePullPolicy: Always
           ports:
             - containerPort: 80

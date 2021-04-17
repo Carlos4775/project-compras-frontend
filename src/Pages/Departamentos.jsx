@@ -6,9 +6,11 @@ import "../../public/delete_outline-24px.svg";
 import "../../public/mode_edit-24px.svg";
 import "../../public/wysiwyg-24px.svg";
 import "../../public/add_circle_outline-24px.svg";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const Departamentos = () => {
-  const baseUrl = "https://api-compras.projects.helx.dev/api/departamentos";
+  const baseUrl = "https://compras-apec.herokuapp.com/departamentos";
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
@@ -68,6 +70,7 @@ const Departamentos = () => {
           gestor.nombre = respuesta.nombre;
           gestor.estado = respuesta.estado;
         }
+        return null;
       });
     } catch (error) {
       console.log(error);
@@ -87,116 +90,112 @@ const Departamentos = () => {
       });
 
   useEffect(() => {
-    console.log("Getting data");
     peticionGet();
   }, [refreshCount]);
 
   return (
     <MainLayout>
-      <div className="container mx-auto">
-        <div className="flex justify-center">
-          <div className="container mx-20">
-            <div className="flex flex-col">
-              <div className="-my-2 overflow-x-auto">
-                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="absolute flex items-center justify-center rounded-md text-white">
-                    <img
-                      src="add_circle_outline-24px.svg"
-                      alt=""
-                      onClick={() => {
-                        setIsOpen(!isOpen);
-                      }}
-                      className="cursor-pointer"
-                    />
-                  </div>
-                  <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
-                    Agregar departamento
-                  </p>
-                  <br />
-                  <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Id Departamento
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Nombre
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Estado
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Operaciones
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {data.map((gestor) => (
-                          <tr key={gestor.id_Departamento}>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center">
-                                <div className="ml-4">
-                                  <div className="text-sm font-medium text-gray-900">
-                                    {gestor.id_Departamento}
-                                  </div>
-                                </div>
+      <div className="px-10">
+        <div className="flex flex-col">
+          <div className="overflow-x-auto">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="absolute flex items-center justify-center rounded-md text-white">
+                <img
+                  src="add_circle_outline-24px.svg"
+                  alt=""
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                  className="cursor-pointer"
+                />
+              </div>
+              <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
+                Agregar departamento
+              </p>
+              <br />
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <Table className="min-w-full divide-y divide-gray-200">
+                  <Thead className="bg-gray-50">
+                    <Tr>
+                      <Th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        ID
+                      </Th>
+                      <Th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Nombre
+                      </Th>
+                      <Th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Estado
+                      </Th>
+                      <Th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Operaciones
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {data.map((gestor) => (
+                      <Tr key={gestor.id_Departamento} className="mt-16">
+                        <Td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {gestor.id_Departamento}
                               </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-900">
-                                {gestor.nombre}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                {gestor.estado ? "Activo" : "Inactivo"}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <tr>
-                                <td>
-                                  <img
-                                    src="mode_edit-24px.svg"
-                                    alt=""
-                                    onClick={() => {
-                                      setIsOpen(!isOpen);
-                                      setGestorSeleccionado(gestor);
-                                      setIsEdit(true);
-                                    }}
-                                    className="cursor-pointer"
-                                  />
-                                </td>
-                                <td>
-                                  <img
-                                    src="delete_outline-24px.svg"
-                                    alt=""
-                                    onClick={() => {
-                                      peticionDelete(gestor);
-                                    }}
-                                    className="cursor-pointer"
-                                  />
-                                </td>
-                              </tr>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                            </div>
+                          </div>
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {gestor.nombre}
+                          </div>
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={
+                              gestor.estado
+                                ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                            }
+                          >
+                            {gestor.estado ? "Activo" : "Inactivo"}
+                          </span>
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                          <img
+                            src="mode_edit-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              setIsOpen(!isOpen);
+                              setGestorSeleccionado(gestor);
+                              setIsEdit(true);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+
+                          <img
+                            src="delete_outline-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              peticionDelete(gestor);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
               </div>
             </div>
           </div>
@@ -220,7 +219,7 @@ const Departamentos = () => {
                 name="nombre"
                 onChange={handleChange}
                 value={gestorSeleccionado.nombre}
-                className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
               />
               <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Estado

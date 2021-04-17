@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import MainLayout from "../Layout/MainLayout";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const UnidadesMedida = () => {
-  const baseUrl = "https://api-compras.projects.helx.dev/api/unidadesmedidas";
-  const [data, setData] = useState([]);
+  const baseUrl = "https://compras-apec.herokuapp.com/unidadesmedidas";
+  const [data, seTdata] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
@@ -35,7 +37,7 @@ const UnidadesMedida = () => {
   const peticionGet = async () => {
     try {
       const response = await axios.get(baseUrl);
-      setData(response.data);
+      seTdata(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +46,7 @@ const UnidadesMedida = () => {
   const peticionPost = async () => {
     try {
       const response = await axios.post(baseUrl, gestorSeleccionado);
-      setData(data.concat(response.data));
+      seTdata(data.concat(response.data));
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +65,7 @@ const UnidadesMedida = () => {
           gestor.descripcion = respuesta.descripcion;
           gestor.estado = respuesta.estado;
         }
+        return null;
       });
     } catch (error) {
       console.log(error);
@@ -72,8 +75,8 @@ const UnidadesMedida = () => {
   const peticionDelete = (x) =>
     axios
       .delete(baseUrl + "/" + x.id_Unidad_Medida)
-      .then((response) => {
-        setData(
+      .Then((response) => {
+        seTdata(
           data.filter((gestor) => gestor.id_Unidad_Medida !== response.data)
         );
       })
@@ -82,15 +85,14 @@ const UnidadesMedida = () => {
       });
 
   useEffect(() => {
-    console.log("Getting data");
     peticionGet();
   }, [refreshCount]);
 
   return (
     <MainLayout>
-      <div className="container mx-auto">
+      <div className="px-10">
         <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto">
+          <div className="overflow-x-auto">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="absolute flex items-center justify-center rounded-md text-white">
                 <img
@@ -101,45 +103,44 @@ const UnidadesMedida = () => {
                   }}
                   className="cursor-pointer"
                 />
+                <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
+                  Agregar unidad
+                </p>
               </div>
-              <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
-                Agregar unidad de medida
-              </p>
-              <br />
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
+              <div className="shadow mt-12 overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <Table className="min-w-full divide-y divide-gray-200">
+                  <Thead className="bg-gray-50">
+                    <Tr>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Id Unidad de medida
-                      </th>
-                      <th
+                        ID
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Descripción
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Estado
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Operaciones
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
                     {data.map((gestor) => (
-                      <tr key={gestor.id_Unidad_Medida}>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                      <Tr key={gestor.id_Unidad_Medida} className="mt-10">
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">
@@ -147,47 +148,48 @@ const UnidadesMedida = () => {
                               </div>
                             </div>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.descripcion}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={
+                              gestor.estado
+                                ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                            }
+                          >
                             {gestor.estado ? "Activo" : "Inactivo"}
                           </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <tr>
-                            <td>
-                              <img
-                                src="mode_edit-24px.svg"
-                                alt=""
-                                onClick={() => {
-                                  setIsOpen(!isOpen);
-                                  setGestorSeleccionado(gestor);
-                                  setIsEdit(true);
-                                }}
-                                className="cursor-pointer"
-                              />
-                            </td>
-                            <td>
-                              <img
-                                src="delete_outline-24px.svg"
-                                alt=""
-                                onClick={() => {
-                                  peticionDelete(gestor);
-                                }}
-                                className="cursor-pointer"
-                              />
-                            </td>
-                          </tr>
-                        </td>
-                      </tr>
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                          <img
+                            src="mode_edit-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              setIsOpen(!isOpen);
+                              setGestorSeleccionado(gestor);
+                              setIsEdit(true);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+
+                          <img
+                            src="delete_outline-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              peticionDelete(gestor);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+                        </Td>
+                      </Tr>
                     ))}
-                  </tbody>
-                </table>
+                  </Tbody>
+                </Table>
               </div>
             </div>
           </div>
@@ -213,9 +215,8 @@ const UnidadesMedida = () => {
                 name="descripcion"
                 onChange={handleChange}
                 value={gestorSeleccionado.descripcion}
-                className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-              ></input>
-              <br />
+                className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+              />
               <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                 Estado
               </label>

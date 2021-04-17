@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../Layout/MainLayout";
 import axios from "axios";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const OrdenCompra = () => {
-  const baseUrl = "https://api-compras.projects.helx.dev/api/ordenescompras";
-  const departamentosUrl =
-    "https://api-compras.projects.helx.dev/api/departamentos";
-  const proveedoresUrl =
-    "https://api-compras.projects.helx.dev/api/proveedores";
+  const baseUrl = "https://compras-apec.herokuapp.com/ordenescompras";
+  const departamentosUrl = "https://compras-apec.herokuapp.com/departamentos";
+  const proveedoresUrl = "https://compras-apec.herokuapp.com/proveedores";
+  const unidadMedidaUrl = "https://compras-apec.herokuapp.com/unidadesmedidas";
   const [ordenCompra, setOrdenCompra] = useState([]);
   const [proveedor, setProveedor] = useState([]);
   const [departamento, setDepartamento] = useState([]);
+  const [unidadMedida, setUnidadMedida] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
@@ -25,7 +27,6 @@ const OrdenCompra = () => {
     id_Proveedor: 0,
     id_Departamento: 0,
     monto: 0,
-    id_Asiento: 0,
   });
 
   const refresh = () => {
@@ -44,6 +45,7 @@ const OrdenCompra = () => {
       ...gestorSeleccionado,
       [name]: value,
     };
+    newSelection.monto = newSelection.cantidad * newSelection.costo_Unitario;
     setGestorSeleccionado(newSelection);
     console.log(newSelection);
   };
@@ -52,6 +54,15 @@ const OrdenCompra = () => {
     try {
       const response = await axios.get(baseUrl);
       setOrdenCompra(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const peticionGetUnidadMedida = async () => {
+    try {
+      const response = await axios.get(unidadMedidaUrl);
+      setUnidadMedida(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -127,17 +138,17 @@ const OrdenCompra = () => {
       });
 
   useEffect(() => {
-    console.log("Getting data");
     peticionGet();
+    peticionGetUnidadMedida();
     peticionGetDepartamentos();
     peticionGetProveedores();
   }, [refreshCount]);
 
   return (
     <MainLayout>
-      <div className="container mx-auto">
+      <div className="px-10">
         <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto">
+          <div className="overflow-x-auto">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="absolute flex items-center justify-center rounded-md text-white">
                 <img
@@ -150,97 +161,97 @@ const OrdenCompra = () => {
                 />
               </div>
               <p className="ml-12 text-lg leading-6 font-medium text-gray-900">
-                Agregar orden de compra
+                Agregar orden
               </p>
               <br />
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
+                <Table className="min-w-full divide-y divide-gray-200">
+                  <Thead className="bg-gray-50">
+                    <Tr>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Id orden
-                      </th>
-                      <th
+                        ID
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         No.
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Fecha
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Estado
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Cantidad
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Costo unit
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Monto
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Id Asiento
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Id Articulo
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Id U.M.
-                      </th>
-                      <th
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Id Proveedor
-                      </th>
-                      <th
+                        Id Prov.
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Id Departamento
-                      </th>
-                      <th
+                        Id Dep.
+                      </Th>
+                      <Th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Operacion
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
                     {ordenCompra.map((gestor) => (
-                      <tr key={gestor.id_Orden_Compra}>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                      <Tr key={gestor.id_Orden_Compra} className="mt-10">
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">
@@ -248,124 +259,126 @@ const OrdenCompra = () => {
                               </div>
                             </div>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.no_Orden}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.fecha_Orden}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={
+                              gestor.estado
+                                ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                            }
+                          >
                             {gestor.estado ? "Activo" : "Inactivo"}
                           </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.cantidad}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.costo_Unitario}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.monto}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.id_Asiento}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.id_Articulo}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.id_Unidad_Medida}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.id_Proveedor}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {gestor.id_Departamento}
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <tr>
-                            <td>
-                              <img
-                                src="mode_edit-24px.svg"
-                                alt=""
-                                onClick={() => {
-                                  setIsOpen(!isOpen);
-                                  setGestorSeleccionado(gestor);
-                                  setIsEdit(true);
-                                }}
-                                className="cursor-pointer"
-                              />
-                            </td>
-                            <td>
-                              <img
-                                src="delete_outline-24px.svg"
-                                alt=""
-                                onClick={() => {
-                                  peticionDelete(gestor);
-                                }}
-                                className="cursor-pointer"
-                              />
-                            </td>
-                          </tr>
-                        </td>
-                      </tr>
+                        </Td>
+                        <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                          <img
+                            src="mode_edit-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              setIsOpen(!isOpen);
+                              setGestorSeleccionado(gestor);
+                              setIsEdit(true);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+
+                          <img
+                            src="delete_outline-24px.svg"
+                            alt=""
+                            onClick={() => {
+                              peticionDelete(gestor);
+                            }}
+                            className="cursor-pointer inline-block"
+                          />
+                        </Td>
+                      </Tr>
                     ))}
-                  </tbody>
-                </table>
+                  </Tbody>
+                </Table>
               </div>
             </div>
           </div>
         </div>
         <div
           className={
-            "modal h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50 " +
-            (isOpen ? "hidden" : "")
+            "modal h-screen z-10 w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50 overflow-auto overflow-y-scroll max-h-screen" +
+            (isOpen ? " hidden" : "")
           }
         >
-          <div className="bg-white rounded shadow-lg w-10/12 md:w-1/3">
+          <div className="bg-white rounded shadow-lg w-10/12 absolute top-16">
             <div className="border-b px-4 py-2 flex justify-between items-center">
               <h3 className="font-semibold text-lg">
                 Insertar orden de compra
               </h3>
             </div>
             <div className="m-7 p-3">
-              <div className="grid grid-cols-2">
-                <div>
-                  <div className="py-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2">
+                <div className="overflow-auto">
+                  <div className="p-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       No. Orden
                     </label>
                     <input
                       type="number"
                       name="no_Orden"
+                      min={0}
                       onChange={handleChange}
                       value={gestorSeleccionado.no_Orden}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
-                  <div className="py-2">
+                  <div className="p-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Fecha Orden
                     </label>
@@ -374,46 +387,48 @@ const OrdenCompra = () => {
                       name="fecha_Orden"
                       onChange={handleChange}
                       value={gestorSeleccionado.fecha_Orden}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
-                  <div className="py-2">
+                  <div className="p-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Cantidad
                     </label>
                     <input
                       type="number"
                       name="cantidad"
+                      min={0}
                       onChange={handleChange}
-                      checked={gestorSeleccionado.cantidad}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
-                  <div className="py-2">
+                  <div className="p-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Costo unitario
                     </label>
                     <input
                       type="number"
                       name="costo_Unitario"
+                      min={0}
                       onChange={handleChange}
-                      checked={gestorSeleccionado.costo_Unitario}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
-                  <div className="py-2">
+                  <div className="p-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Monto
                     </label>
                     <input
                       type="number"
                       name="monto"
-                      onChange={handleChange}
-                      checked={gestorSeleccionado.monto}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      disabled
+                      readOnly
+                      min={0}
+                      value={gestorSeleccionado.monto}
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
-                  <div className="py-2">
+                  <div className="p-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Estado
                     </label>
@@ -429,39 +444,37 @@ const OrdenCompra = () => {
                 <div>
                   <div className="py-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
-                      Id Asiento
-                    </label>
-                    <input
-                      type="number"
-                      name="id_Asiento"
-                      onChange={handleChange}
-                      value={gestorSeleccionado.id_Asiento}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                    ></input>
-                  </div>
-                  <div className="py-2">
-                    <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Id Articulo
                     </label>
                     <input
                       type="number"
                       name="id_Articulo"
+                      min={0}
                       onChange={handleChange}
                       value={gestorSeleccionado.id_Articulo}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
                   <div className="py-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
                       Id Unidad Medida
                     </label>
-                    <input
-                      type="number"
+                    <select
                       name="id_Unidad_Medida"
+                      className="my-3 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       onChange={handleChange}
-                      value={gestorSeleccionado.id_Unidad_Medida}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                    ></input>
+                      type="number"
+                    >
+                      <option value="">N/A</option>
+                      {unidadMedida.map((unidad) => (
+                        <option
+                          key={unidad.id_Unidad_Medida}
+                          value={unidad.id_Unidad_Medida}
+                        >
+                          {unidad.descripcion}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="py-2">
                     <label className="block mb-2 text-sm text-gray-600 dark:text-gray-400">
@@ -470,9 +483,10 @@ const OrdenCompra = () => {
                     <input
                       type="number"
                       name="id_Proveedor"
+                      min={0}
                       onChange={handleChange}
                       value={gestorSeleccionado.id_Proveedor}
-                      className="my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                      className="w-full my-3 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                     ></input>
                   </div>
                   <div className="py-2">
@@ -485,6 +499,7 @@ const OrdenCompra = () => {
                       onChange={handleChange}
                       type="number"
                     >
+                      <option value="">N/A</option>
                       {departamento.map((departamento) => (
                         <option
                           key={departamento.id_Departamento}
