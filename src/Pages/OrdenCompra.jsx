@@ -47,7 +47,6 @@ const OrdenCompra = () => {
     };
     newSelection.monto = newSelection.cantidad * newSelection.costo_Unitario;
     setGestorSeleccionado(newSelection);
-    console.log(newSelection);
   };
 
   const peticionGet = async () => {

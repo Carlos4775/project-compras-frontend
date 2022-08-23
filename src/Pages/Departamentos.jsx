@@ -36,7 +36,6 @@ const Departamentos = () => {
       ...gestorSeleccionado,
       [name]: value,
     });
-    console.log(gestorSeleccionado);
   };
 
   const peticionGet = async () => {

@@ -39,7 +39,6 @@ const Asientos = () => {
       ...ordenSeleccionado,
       [name]: value,
     });
-    console.log("orden", ordenSeleccionado);
   };
 
   const handleChangeForm = (e) => {
@@ -53,7 +52,6 @@ const Asientos = () => {
       ...gestorSeleccionado,
       [name]: value,
     });
-    console.log("gestor", gestorSeleccionado);
   };
 
   const peticionGetOrden = async () => {
@@ -70,7 +68,6 @@ const Asientos = () => {
         ...gestorSeleccionado,
         seatAmount: response.data.monto_total,
       });
-      console.log(response.data.ordenes_compras);
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +85,6 @@ const Asientos = () => {
           ordenSeleccionado.fecha_fin,
         gestorSeleccionado
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

@@ -32,7 +32,6 @@ const Proveedores = () => {
       ...gestorSeleccionado,
       [name]: value,
     });
-    console.log(gestorSeleccionado);
   };
 
   const peticionGet = async () => {

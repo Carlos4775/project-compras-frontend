@@ -37,7 +37,6 @@ const Articulos = () => {
       [name]: value,
     };
     setGestorSeleccionado(newSelection);
-    console.log(newSelection);
   };
 
   const peticionGet = async () => {

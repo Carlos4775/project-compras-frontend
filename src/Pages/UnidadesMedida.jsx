@@ -31,7 +31,6 @@ const UnidadesMedida = () => {
       ...gestorSeleccionado,
       [name]: value,
     });
-    console.log(gestorSeleccionado);
   };
 
   const peticionGet = async () => {
