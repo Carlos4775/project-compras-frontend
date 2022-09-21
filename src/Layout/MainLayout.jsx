@@ -9,7 +9,7 @@ export default function MainLayout({ children }) {
         {children}
       </div>
       <div className="absolute bottom-0 inset-x-0 p-10 text-xs text-white bg-gray-800 z-0">
-        2021 Carlos Torres. All rights reserved
+        2021 Carlos Torres. Todos los derechos reservados
       </div>
     </div>
   );

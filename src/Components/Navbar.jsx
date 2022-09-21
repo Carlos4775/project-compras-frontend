@@ -58,8 +58,8 @@ const Navbar = () => {
                           <div className="ml-4">
                             Artículos
                             <p className="mt-1 text-sm text-gray-500">
-                              Get a better understanding of where your traffic
-                              is coming from.
+                              Obtenga una mejor comprensión de dónde proviene su
+                              tráfico.
                             </p>
                           </div>
                         </Link>
@@ -88,8 +88,8 @@ const Navbar = () => {
                               Departamentos
                             </p>
                             <p className="mt-1 text-sm text-gray-500">
-                              Speak directly to your customers in a more
-                              meaningful way.
+                              Hable directamente con sus clientes de una forma
+                              más de manera significativa.
                             </p>
                           </div>
                         </Link>
@@ -118,7 +118,8 @@ const Navbar = () => {
                               Proveedores
                             </p>
                             <p className="mt-1 text-sm text-gray-500">
-                              Your customers&#039; data will be safe and secure.
+                              Los datos de su cliente estarán seguros y
+                              protegidos.
                             </p>
                           </div>
                         </Link>
@@ -147,8 +148,8 @@ const Navbar = () => {
                               Ordenes de compra
                             </p>
                             <p className="mt-1 text-sm text-gray-500">
-                              Connect with third-party tools that you&#039;re
-                              already using.
+                              Conéctese con herramientas de terceros que ya está
+                              utilizando.
                             </p>
                           </div>
                         </Link>
@@ -177,8 +178,8 @@ const Navbar = () => {
                               Unidades de medida
                             </p>
                             <p className="mt-1 text-sm text-gray-500">
-                              Build strategic funnels that will drive your
-                              customers to convert
+                              Cree embudos estratégicos que impulsarán a sus
+                              clientes a convertir
                             </p>
                           </div>
                         </Link>
