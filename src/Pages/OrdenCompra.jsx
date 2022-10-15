@@ -14,6 +14,7 @@ const OrdenCompra = () => {
   const [departamento, setDepartamento] = useState([]);
   const [unidadMedida, setUnidadMedida] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
   const [gestorSeleccionado, setGestorSeleccionado] = useState({
@@ -56,6 +57,7 @@ const OrdenCompra = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoader(true);
   };
 
   const peticionGetUnidadMedida = async () => {
@@ -163,189 +165,195 @@ const OrdenCompra = () => {
                 Agregar orden
               </p>
               <br />
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <Table className="min-w-full divide-y divide-gray-200">
-                  <Thead className="bg-gray-50">
-                    <Tr>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        ID
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        No.
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Fecha
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Estado
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Cantidad
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Costo unit
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Monto
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Id Asiento
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Id Articulo
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Id U.M.
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Id Prov.
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Id Dep.
-                      </Th>
-                      <Th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Operacion
-                      </Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {ordenCompra.map((gestor) => (
-                      <Tr key={gestor.id_Orden_Compra} className="mt-10">
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">
-                                {gestor.id_Orden_Compra}
+              {loader ? (
+                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                  <Table className="min-w-full divide-y divide-gray-200">
+                    <Thead className="bg-gray-50">
+                      <Tr>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          ID
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          No.
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Fecha
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Estado
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Cantidad
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Costo unit
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Monto
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Id Asiento
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Id Articulo
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Id U.M.
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Id Prov.
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Id Dep.
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Operacion
+                        </Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {ordenCompra.map((gestor) => (
+                        <Tr key={gestor.id_Orden_Compra} className="mt-10">
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {gestor.id_Orden_Compra}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.no_Orden}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.fecha_Orden}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={
-                              gestor.estado
-                                ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                                : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                            }
-                          >
-                            {gestor.estado ? "Activo" : "Inactivo"}
-                          </span>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.cantidad}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.costo_Unitario}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.monto}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.id_Asiento}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.id_Articulo}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.id_Unidad_Medida}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.id_Proveedor}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.id_Departamento}
-                          </div>
-                        </Td>
-                        <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
-                          <img
-                            src="mode_edit-24px.svg"
-                            alt=""
-                            onClick={() => {
-                              setIsOpen(!isOpen);
-                              setGestorSeleccionado(gestor);
-                              setIsEdit(true);
-                            }}
-                            className="cursor-pointer inline-block"
-                          />
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.no_Orden}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.fecha_Orden}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <span
+                              className={
+                                gestor.estado
+                                  ? "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                              }
+                            >
+                              {gestor.estado ? "Activo" : "Inactivo"}
+                            </span>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.cantidad}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.costo_Unitario}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.monto}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.id_Asiento}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.id_Articulo}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.id_Unidad_Medida}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.id_Proveedor}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.id_Departamento}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                            <img
+                              src="mode_edit-24px.svg"
+                              alt=""
+                              onClick={() => {
+                                setIsOpen(!isOpen);
+                                setGestorSeleccionado(gestor);
+                                setIsEdit(true);
+                              }}
+                              className="cursor-pointer inline-block"
+                            />
 
-                          <img
-                            src="delete_outline-24px.svg"
-                            alt=""
-                            onClick={() => {
-                              peticionDelete(gestor);
-                            }}
-                            className="cursor-pointer inline-block"
-                          />
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
-              </div>
+                            <img
+                              src="delete_outline-24px.svg"
+                              alt=""
+                              onClick={() => {
+                                peticionDelete(gestor);
+                              }}
+                              className="cursor-pointer inline-block"
+                            />
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </div>
+              ) : (
+                <div class="absolute right-1/2 bottom-1/2 transform translate-x-1/2 translate-y-1/2 ">
+                  <div class="border-t-transparent border-solid animate-spin rounded-full border-blue-600 border-r-8 border-t-8 h-32 w-32"></div>
+                </div>
+              )}
             </div>
           </div>
         </div>

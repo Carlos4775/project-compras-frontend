@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MainLayout from "../Layout/MainLayout";
 import axios from "axios";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 const Asientos = () => {
   const baseUrl = "https://d57b22c5989c.ngrok.io/api/accountingEntry";
   const asientosURL = "https://compras-apec.herokuapp.com/ordenescompras";
@@ -107,9 +108,9 @@ const Asientos = () => {
 
   return (
     <MainLayout>
-      <div className="md:container md:mx-auto px-4">
+      <div className="md:container md:mx-auto px-10">
         <div className="flex flex-col sm:mt-0">
-          <div className="mt-5 md:mt-0 grid md:grid-cols-2">
+          <div className="grid grid-cols-1">
             <div className="pr-5">
               <div className="mb-5 pb-5 pr-5 inline-block">
                 <label
@@ -127,7 +128,7 @@ const Asientos = () => {
                   className="mt-3 px-4 py-1 focus:ring-blue-500 focus:border-blue-500 block shadow-sm border border-gray-300 rounded-md"
                 />
               </div>
-              <div className="mb-5 pb-5 pl-5 inline-block">
+              <div className="mb-5 pb-5 inline-block">
                 <label
                   htmlFor="fecha_fin"
                   className="block text-sm font-medium text-gray-700"
@@ -143,119 +144,124 @@ const Asientos = () => {
                   className="mt-3 px-4 py-1 focus:ring-blue-500 focus:border-blue-500 block shadow-sm border border-gray-300 rounded-md"
                 />
               </div>
-              <div className="mb-5 pb-5 pl-5 inline-block">
+              <div className="mb-5 sm:inline-block sm:mx-4">
                 <button
                   type="button"
-                  className="inline-flex justify-center py-2 px-4 mx-5 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   onClick={peticionGetOrden}
                 >
                   Filtrar
                 </button>
               </div>
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        No. orden
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Fecha
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Id asiento
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Monto
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {ordenesCompras.map((gestor) => (
-                      <tr key={gestor.numero_orden}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">
-                                {gestor.numero_orden}
+              {ordenesCompras.length > 0 ? (
+                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                  <Table className="min-w-full divide-y divide-gray-200">
+                    <Thead className="bg-gray-50">
+                      <Tr>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          No. orden
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Fecha
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Id asiento
+                        </Th>
+                        <Th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Monto
+                        </Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody className="bg-white divide-y divide-gray-200">
+                      {ordenesCompras.map((gestor) => (
+                        <Tr key={gestor.numero_orden}>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {gestor.numero_orden}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.fecha}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.id_asiento}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {gestor.monto_orden}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <div className="my-5 pb-5 pr-5 inline-block">
-                  <label
-                    htmlFor="descripcion"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Total
-                  </label>
-                  <input
-                    type="text"
-                    name="seatAmount"
-                    id="seatAmount"
-                    readOnly
-                    onChange={handleChange}
-                    className="mt-3 px-4 py-1 focus:ring-blue-500 focus:border-blue-500 block shadow-sm border border-gray-300 rounded-md"
-                    value={gestorSeleccionado.seatAmount}
-                  />
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.fecha}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.id_asiento}
+                            </div>
+                          </Td>
+                          <Td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {gestor.monto_orden}
+                            </div>
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
                 </div>
-                <div className="my-5 pb-5 pl-5 inline-block">
-                  <label
-                    htmlFor="id_asiento"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Id Asiento
-                  </label>
-                  <input
-                    type="text"
-                    name="id_asiento"
-                    id="id_asiento"
-                    readOnly
-                    value={gestorSeleccionado.id}
-                    onChange={handleChange}
-                    autoComplete="given-name"
-                    className="mt-3 px-4 py-1 focus:ring-blue-500 focus:border-blue-500 block shadow-sm border border-gray-300 rounded-md"
-                  />
+              ) : (
+                <div class="bg-gray-50 mb-5 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  No hay asientos
                 </div>
+              )}
+
+              <div className="my-5 pb-5 pr-5 inline-block">
+                <label
+                  htmlFor="descripcion"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Total
+                </label>
+                <input
+                  type="text"
+                  name="seatAmount"
+                  id="seatAmount"
+                  readOnly
+                  onChange={handleChange}
+                  className="mt-3 px-4 py-1 focus:ring-blue-500 focus:border-blue-500 block shadow-sm border border-gray-300 rounded-md"
+                  value={gestorSeleccionado.seatAmount}
+                />
               </div>
-              <div>
+              <div className="my-5 pb-5 inline-block">
+                <label
+                  htmlFor="id_asiento"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Id Asiento
+                </label>
+                <input
+                  type="text"
+                  name="id_asiento"
+                  id="id_asiento"
+                  readOnly
+                  value={gestorSeleccionado.id}
+                  onChange={handleChange}
+                  autoComplete="given-name"
+                  className="mt-3 px-4 py-1 focus:ring-blue-500 focus:border-blue-500 block shadow-sm border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="flex flex-col sm:flex-row">
                 <div className="inline mr-5">
                   <button
                     type="submit"
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex justify-center mb-5 py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     onClick={() => {
                       setIsOpen(!isOpen);
                     }}
@@ -263,10 +269,10 @@ const Asientos = () => {
                     Completar datos
                   </button>
                 </div>
-                <div className="inline ml-5">
+                <div className="inline">
                   <button
                     onClick={peticionPut}
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex justify-center mb-5 py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
                     Guardar
                   </button>
